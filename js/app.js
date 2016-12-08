@@ -137,7 +137,7 @@ function checkSum(sum) {
 
     sum = lengthCheck(sum);
 
-    if(sum > 99999999) {
+    if(sum > 99999999 || sum < -99999999) {
         return 'Error';
     } else {
         return sum;
