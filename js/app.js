@@ -148,7 +148,7 @@ function lengthCheck(sum) {
     //var beforeComma = sumString.split('.')[0];
     //var afterComma = sumString.split('.')[1];
     //var totalLength = beforeComma.length + afterComma.length;
-    var maxLength = 9;
+    var maxLength = 10;
     var sliceLength = 0;
     var sliced;
     console.log('Sum: ' + sum);
