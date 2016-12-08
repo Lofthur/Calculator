@@ -34,7 +34,8 @@ $('.key').click(function() {
 // if it's empty it will be set to 0.
 // If not it takes the equation string and parse and push it to the equation array.
 $('.aritm-key').click(function() {
-    if(equationArr.length === 0) {
+    if(!arithmIsLast) {
+        if(equationArr.length === 0) {
         if(equation === '') {
             equation = '0';
         }
@@ -56,7 +57,9 @@ $('.aritm-key').click(function() {
         equation = '';
         equationArr.push(tempSum);
         equationArr.push(this.innerHTML);
+        }
     }
+    
     arithmIsLast = true;
     comma = false;
 });
