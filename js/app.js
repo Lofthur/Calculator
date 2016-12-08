@@ -6,9 +6,10 @@ var equalLast = false;
 var comma = false;
 var sum = 0;
 
-// This is the event that happens when a number key is hit
-// The equation string add the number pressed (as adding the number to the string).
-// Then the string is shown in the calculator display
+// When a number key is pressed this function will run.
+// First check if the length of the equation string is longer than eight characters long.
+// Then add this key's HTML to the equation string.
+// The string is shown in the calculator display.
 $('.key').click(function() {
     if(equation.length <= 8) {
         if(this.innerHTML === '.' && comma === false) {
@@ -23,12 +24,7 @@ $('.key').click(function() {
 
 });
 
-/*
-    sett maks float decimals til 7
-    sjekk opp mot lengden til equation stringen...
-*/
-
-// This is the event that happsens when one of the arithmetic keys are pressed.
+// This is event is run when one of the arithmetic keys are pressed.
 // First it checks if the equation array has any values in it.
 // If it does not have any value it checks to see if the equation string is empty,
 // if it's empty it will be set to 0.
@@ -64,9 +60,10 @@ $('.aritm-key').click(function() {
     comma = false;
 });
 
-//Må sjekke hovrdan jeg setter charater lengde på equation stringen.
-
-
+// This event is run when the equals key is pressed.
+// The find total value gets called and the return value is set to the sum variable.
+// The sum is again checked in the checkSum function, and the return value of this is 
+// shown in the display.
 $('.equal-key').click(function() {
     if(arithmIsLast) {
         sum = findTotal(equationArr[0], equationArr[1], equationArr[0]);
@@ -87,6 +84,8 @@ $('.equal-key').click(function() {
         comma = false;
 });
 
+
+// When the ac-key is pressed many of the variables gets reset.
 $('#ac-key').click(function() {
     equation = '';
     equationArr = [];
@@ -97,6 +96,7 @@ $('#ac-key').click(function() {
     comma = false;
 });
 
+// The ce-key empties the value of the equation string.
 $('#ce-key').click(function() {
     if(!arithmIsLast) {
         equation = '';
@@ -106,6 +106,8 @@ $('#ce-key').click(function() {
     }
 });
 
+// The findTotal function checks what the art in a switch, and does corresponding
+// calculations according to that.
 function findTotal(a, art, b) {
     var sum;
     switch (art) {
@@ -129,6 +131,8 @@ function findTotal(a, art, b) {
     return sum;
 }
 
+// The checkSum function checks the sum parameter in with the lengthCheck funtion.
+// It also checks to see if the sum is in the valid value range.
 function checkSum(sum) {
 
     sum = lengthCheck(sum);
@@ -140,17 +144,11 @@ function checkSum(sum) {
     }
 }
 
-// finne ut hvis total lengde er 13 få den ned til 8
-// 13 - 8 = 5
-// 21 - 8 = 13
-// svaret blir da det som må trekkes fra enden til svaret
-
+// The lengthCheck checks the lengt of the sum string,
+// and cuts away numbers after comma if the string is outside the 
+// boundary range set.
 function lengthCheck(sum) {
-    //var sumString = sum.toString().split('.');
     var sumString = sum.toString();
-    //var beforeComma = sumString.split('.')[0];
-    //var afterComma = sumString.split('.')[1];
-    //var totalLength = beforeComma.length + afterComma.length;
     var maxLength = 10;
     var sliceLength = 0;
     var sliced;
@@ -158,28 +156,15 @@ function lengthCheck(sum) {
     console.log('SumString: ' + sumString);
     console.log(sumString);
     console.log('SumString length ' + sumString.length);
-    //console.log(beforeComma.length);
-    //console.log(afterComma.length);
-    //console.log(totalLength);
-
-
+   
     if(sumString.length > maxLength) {
         return (sumString = sumString.slice(0, maxLength));
     } else {
         return sumString;
     }
-
-    /*if(totalLength > maxLength) {
-        sliceLength = totalLength - maxLength;
-        afterComma = sumString.slice(beforeComma.length + 1, sliceLength);
-    } else if(totalLength == maxLength) {
-        console.log('hello');
-    }*/
-
-    //return (sumString = beforeComma.concat('.' + afterComma));
-
 }
 
+// This function just initializes the display.
 function init() {
     $('.sum').html(sum);
 }
