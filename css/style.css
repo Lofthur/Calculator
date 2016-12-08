@@ -5,6 +5,7 @@ body {
 }
 
 .calculator {
+    width: 300px;
     background-color: #6da4b9;
     background-image: linear-gradient(to right, #86aecc, #d4e4ef 5%, #d4e4ef 95%, #86aecc);
     border-radius: 5px 40px;
