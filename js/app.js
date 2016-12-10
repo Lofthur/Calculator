@@ -1,6 +1,8 @@
 var equation = '';
 var equationArr = [];
 var tempSum = 0;
+var equalTempSum = 0;
+var tempAritm;
 var arithmIsLast = false;
 var equalLast = false;
 var comma = false;
@@ -20,6 +22,13 @@ $('.key').click(function() {
         }
         arithmIsLast = false;
         $('.sum').html(equation);
+    }
+
+    // her må det også settes ett flagg som gjør at det må sjekkes opp
+    if(equalLast) {
+        // denne virker, men jeg må bare få fletta den inn i equal key.
+        sum = findTotal(equalTempSum, tempAritm, parseFloat(this.innerHTML));
+        console.log(sum);
     }
 
 });
@@ -68,12 +77,16 @@ $('.equal-key').click(function() {
     if(arithmIsLast) {
         sum = findTotal(equationArr[0], equationArr[1], equationArr[0]);
         $('.sum').html(checkSum(sum));
+        equalTempSum = equationArr[0];
+        tempAritm = equationArr[1];
         equationArr.push(equationArr[0]);
         equationArr[0] = sum;
         arithmIsLast = false;
     } else {
         equationArr.push(parseFloat(equation));
         sum = findTotal(equationArr[0], equationArr[1], equationArr[2]);
+        equalTempSum = equationArr[2];
+        tempAritm = equationArr[1];
         $('.sum').html(checkSum(sum));
         equationArr[0] = sum;
         if(equationArr.length > 3) {
@@ -102,7 +115,6 @@ $('#ce-key').click(function() {
         equation = '';
         $('.sum').html(0);
         comma = false;
-        console.log(equationArr);
     }
 });
 
@@ -152,11 +164,7 @@ function lengthCheck(sum) {
     var maxLength = 10;
     var sliceLength = 0;
     var sliced;
-    console.log('Sum: ' + sum);
-    console.log('SumString: ' + sumString);
-    console.log(sumString);
-    console.log('SumString length ' + sumString.length);
-   
+
     if(sumString.length > maxLength) {
         return (sumString = sumString.slice(0, maxLength));
     } else {
