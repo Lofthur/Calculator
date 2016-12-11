@@ -3,6 +3,7 @@ var equationArr = [];
 var tempSum = 0;
 var equalTempSum = 0;
 var tempAritm;
+var tempNumberKey;
 var arithmIsLast = false;
 var equalLast = false;
 var comma = false;
@@ -29,6 +30,8 @@ $('.key').click(function() {
         // denne virker, men jeg må bare få fletta den inn i equal key.
         sum = findTotal(equalTempSum, tempAritm, parseFloat(this.innerHTML));
         console.log(sum);
+        tempNumberKey = this.innerHTML;
+        $('.sum').html(this.innerHTML);// Nå er denne i orden. Må bare fikse slik at summen når man trykker equal tasten nå blir summen
     }
 
 });
