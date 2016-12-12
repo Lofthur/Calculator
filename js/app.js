@@ -3,7 +3,7 @@ var equationArr = [];
 var tempSum = 0;
 var equalTempSum = 0;
 var tempAritm;
-var tempNumberKey;
+var numberLast = false;
 var arithmIsLast = false;
 var equalLast = false;
 var comma = false;
@@ -29,11 +29,12 @@ $('.key').click(function() {
     if(equalLast) {
         // denne virker, men jeg må bare få fletta den inn i equal key.
         sum = findTotal(equalTempSum, tempAritm, parseFloat(this.innerHTML));
-        console.log(sum);
+        console.log('equal last sum: ' + sum);
         tempNumberKey = this.innerHTML;
         $('.sum').html(this.innerHTML);// Nå er denne i orden. Må bare fikse slik at summen når man trykker equal tasten nå blir summen
     }
 
+    numberLast = true;
 });
 
 // This is event is run when one of the arithmetic keys are pressed.
@@ -67,17 +68,22 @@ $('.aritm-key').click(function() {
         equationArr.push(this.innerHTML);
         }
     }
-    
+
     arithmIsLast = true;
     comma = false;
+    numberLast = false;
 });
 
 // This event is run when the equals key is pressed.
 // The find total value gets called and the return value is set to the sum variable.
-// The sum is again checked in the checkSum function, and the return value of this is 
+// The sum is again checked in the checkSum function, and the return value of this is
 // shown in the display.
 $('.equal-key').click(function() {
-    if(arithmIsLast) {
+
+    if(equalLast && numberLast) {
+        console.log('equal key sum: ' + sum);
+        $('.sum').html(checkSum(sum));
+    } else if(arithmIsLast) {
         sum = findTotal(equationArr[0], equationArr[1], equationArr[0]);
         $('.sum').html(checkSum(sum));
         equalTempSum = equationArr[0];
@@ -85,18 +91,20 @@ $('.equal-key').click(function() {
         equationArr.push(equationArr[0]);
         equationArr[0] = sum;
         arithmIsLast = false;
-    } else {
+    } else { // lag en else if her som skjekker om equal er den siste tasten som er trykt...
         equationArr.push(parseFloat(equation));
         sum = findTotal(equationArr[0], equationArr[1], equationArr[2]);
         equalTempSum = equationArr[2];
         tempAritm = equationArr[1];
         $('.sum').html(checkSum(sum));
+        console.log('equal else sum: ' + sum);
         equationArr[0] = sum;
         if(equationArr.length > 3) {
             equationArr.pop();
         }
     }
         equalLast = true;
+        numberLast = false;
         comma = false;
 });
 
@@ -160,7 +168,7 @@ function checkSum(sum) {
 }
 
 // The lengthCheck checks the lengt of the sum string,
-// and cuts away numbers after comma if the string is outside the 
+// and cuts away numbers after comma if the string is outside the
 // boundary range set.
 function lengthCheck(sum) {
     var sumString = sum.toString();
