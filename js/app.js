@@ -183,4 +183,5 @@ function init() {
     $('.sum').html(sum);
 }
 
+//Test to see if commit now works
 init();
